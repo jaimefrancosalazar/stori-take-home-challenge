@@ -1,1 +1,0 @@
-# Stori Take Home Challenge

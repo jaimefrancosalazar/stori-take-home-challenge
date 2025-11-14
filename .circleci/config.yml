@@ -1,0 +1,41 @@
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@9.3.3
+  aws-ecs: circleci/aws-ecs@4.0.0
+  aws-cli: circleci/aws-cli@5.4.1
+
+workflows:
+  build-and-deploy:
+    jobs:
+      # Build and push Docker image to ECR when code changes in application/
+      - aws-ecr/build_and_push_image:
+          name: build-and-push-image
+          context: aws-access
+          dockerfile: Dockerfile
+          path: ./application
+          repo: ${ECR_REPOSITORY_NAME}
+          tag: ${CIRCLE_SHA1},latest
+          region: ${AWS_REGION}
+          filters:
+            branches:
+              only:
+                - main
+
+      # Deploy new task definition to ECS
+      - aws-ecs/deploy_service_update:
+          name: deploy-to-ecs
+          context: aws-access
+          cluster: ${ECS_CLUSTER_NAME}
+          service_name: ${ECS_SERVICE_NAME}
+          container_image_name_updates: "container=${CONTAINER_NAME},tag=${CIRCLE_SHA1}"
+          verify_revision_is_deployed: true
+          max_poll_attempts: 50
+          poll_interval: 20
+          region: ${AWS_REGION}
+          requires:
+            - build-and-push-image
+          filters:
+            branches:
+              only:
+                - main
