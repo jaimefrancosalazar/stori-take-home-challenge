@@ -14,6 +14,7 @@ workflows:
           context: aws-access
           auth:
             - aws-cli/setup
+          account_id: "809893975291"
           dockerfile: Dockerfile
           path: ./application
           repo: stori-challenge-app
