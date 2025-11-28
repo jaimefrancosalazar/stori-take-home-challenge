@@ -7,6 +7,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy static HTML content
 COPY index.html /usr/share/nginx/html/index.html
 
+# Copy health check endpoint
+COPY health /usr/share/nginx/html/health
+
 # Expose port 80
 EXPOSE 80
 
