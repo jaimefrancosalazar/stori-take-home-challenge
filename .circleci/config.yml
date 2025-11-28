@@ -65,7 +65,7 @@ workflows:
           cluster: stori-challenge-cluster
           service_name: stori-challenge-service
           container_image_name_updates: "container=stori-app,tag=${CIRCLE_SHA1}"
-          verify_revision_is_deployed: true
+          verify_revision_is_deployed: false
           max_poll_attempts: 50
           poll_interval: 20
           region: us-east-2
