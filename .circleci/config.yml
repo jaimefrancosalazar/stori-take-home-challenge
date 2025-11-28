@@ -15,8 +15,8 @@ workflows:
           auth:
             - aws-cli/setup
           account_id: "809893975291"
-          dockerfile: Dockerfile
-          path: ./application
+          dockerfile: application/Dockerfile
+          path: application
           repo: stori-challenge-app
           tag: ${CIRCLE_SHA1},latest
           region: us-east-2
