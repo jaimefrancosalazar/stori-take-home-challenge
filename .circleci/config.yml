@@ -28,6 +28,9 @@ workflows:
       - aws-ecs/deploy_service_update:
           name: deploy-to-ecs
           context: aws-access
+          auth:
+            - aws-cli/setup
+          family: stori-challenge-task
           cluster: stori-challenge-cluster
           service_name: stori-challenge-service
           container_image_name_updates: "container=stori-app,tag=${CIRCLE_SHA1}"
