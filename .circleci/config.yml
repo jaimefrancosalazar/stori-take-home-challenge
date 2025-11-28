@@ -15,6 +15,8 @@ workflows:
           auth:
             - aws-cli/setup
           account_id: "809893975291"
+          public_registry: false
+          skip_when_tags_exist: false
           dockerfile: application/Dockerfile
           path: .
           repo: stori-challenge-app
