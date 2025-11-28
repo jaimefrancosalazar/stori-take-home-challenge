@@ -61,7 +61,7 @@ workflows:
           context: aws-access
           auth:
             - aws-cli/setup
-          family: stori-challenge-task
+          family: stori-challenge
           cluster: stori-challenge-cluster
           service_name: stori-challenge-service
           container_image_name_updates: "container=stori-app,tag=${CIRCLE_SHA1}"
