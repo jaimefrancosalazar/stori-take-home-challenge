@@ -13,10 +13,7 @@ workflows:
           name: build-and-push-image
           context: aws-access
           auth:
-            - aws-cli/setup:
-                aws-access-key-id: AWS_ACCESS_KEY_ID
-                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-                region: AWS_DEFAULT_REGION
+            - aws-cli/setup
           dockerfile: Dockerfile
           path: ./application
           repo: stori-challenge-app
