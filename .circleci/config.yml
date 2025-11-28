@@ -43,6 +43,37 @@ jobs:
             docker push 809893975291.dkr.ecr.us-east-2.amazonaws.com/stori-challenge-app:${CIRCLE_SHA1}
             docker push 809893975291.dkr.ecr.us-east-2.amazonaws.com/stori-challenge-app:latest
 
+  deploy-to-ecs:
+    docker:
+      - image: cimg/aws:2024.03
+    steps:
+      - run:
+          name: Update ECS service
+          command: |
+            export AWS_DEFAULT_REGION=us-east-2
+
+            # Get current task definition
+            TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition stori-challenge --region us-east-2)
+
+            # Create new task definition with updated image
+            NEW_TASK_DEF=$(echo $TASK_DEFINITION | jq --arg IMAGE "809893975291.dkr.ecr.us-east-2.amazonaws.com/stori-challenge-app:${CIRCLE_SHA1}" \
+              '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
+
+            # Register new task definition
+            NEW_TASK_INFO=$(aws ecs register-task-definition --region us-east-2 --cli-input-json "$NEW_TASK_DEF")
+            NEW_REVISION=$(echo $NEW_TASK_INFO | jq -r '.taskDefinition.revision')
+
+            echo "Registered new task definition revision: $NEW_REVISION"
+
+            # Update service to use new task definition
+            aws ecs update-service \
+              --cluster stori-challenge-cluster \
+              --service stori-challenge-service \
+              --task-definition stori-challenge:${NEW_REVISION} \
+              --region us-east-2
+
+            echo "Service updated successfully"
+
 workflows:
   build-and-deploy:
     jobs:
@@ -56,19 +87,9 @@ workflows:
                 - main
 
       # Deploy new task definition to ECS
-      - aws-ecs/deploy_service_update:
+      - deploy-to-ecs:
           name: deploy-to-ecs
           context: aws-access
-          auth:
-            - aws-cli/setup
-          family: stori-challenge
-          cluster: stori-challenge-cluster
-          service_name: stori-challenge-service
-          container_image_name_updates: "container=stori-app,tag=${CIRCLE_SHA1}"
-          verify_revision_is_deployed: false
-          max_poll_attempts: 50
-          poll_interval: 20
-          region: us-east-2
           requires:
             - build-and-push-image
           filters:
