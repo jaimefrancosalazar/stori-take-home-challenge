@@ -14,6 +14,21 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Configure AWS credentials
+          command: |
+            echo "Configuring AWS credentials"
+            mkdir -p ~/.aws
+            cat > ~/.aws/credentials << EOF
+            [default]
+            aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+            aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+            EOF
+            cat > ~/.aws/config << EOF
+            [default]
+            region = us-east-2
+            output = json
+            EOF
+      - run:
           name: Login to ECR
           command: |
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 809893975291.dkr.ecr.us-east-2.amazonaws.com
