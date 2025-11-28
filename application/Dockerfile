@@ -2,10 +2,10 @@
 FROM nginx:1.25-alpine
 
 # Copy custom nginx configuration
-COPY application/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy static HTML content
-COPY application/index.html /usr/share/nginx/html/index.html
+COPY index.html /usr/share/nginx/html/index.html
 
 # Expose port 80
 EXPOSE 80
