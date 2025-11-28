@@ -14,23 +14,22 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Configure AWS credentials
+          name: Verify AWS credentials are available
           command: |
-            echo "Configuring AWS credentials"
-            mkdir -p ~/.aws
-            cat > ~/.aws/credentials \<< EOF
-            [default]
-            aws_access_key_id = ${AWS_ACCESS_KEY_ID}
-            aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
-            EOF
-            cat > ~/.aws/config \<< EOF
-            [default]
-            region = us-east-2
-            output = json
-            EOF
+            if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+              echo "ERROR: AWS_ACCESS_KEY_ID is not set"
+              exit 1
+            fi
+            if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+              echo "ERROR: AWS_SECRET_ACCESS_KEY is not set"
+              exit 1
+            fi
+            echo "AWS credentials are available"
+            echo "AWS_ACCESS_KEY_ID starts with: ${AWS_ACCESS_KEY_ID:0:4}..."
       - run:
           name: Login to ECR
           command: |
+            export AWS_DEFAULT_REGION=us-east-2
             aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 809893975291.dkr.ecr.us-east-2.amazonaws.com
       - run:
           name: Build Docker image
