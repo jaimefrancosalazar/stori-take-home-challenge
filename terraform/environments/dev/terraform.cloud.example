@@ -1,0 +1,37 @@
+# Terraform Cloud Configuration Example
+# This file shows how to configure Terraform Cloud for this workspace
+
+# 1. Create a Terraform Cloud account at https://app.terraform.io
+# 2. Create an organization (e.g., "jaimefrancosalazar")
+# 3. Create a workspace named "stori-challenge-dev"
+# 4. Configure the workspace settings:
+
+# Workspace Settings:
+# - Execution Mode: Remote
+# - Terraform Version: >= 1.0
+# - Working Directory: terraform/environments/dev
+
+# Environment Variables (set in Terraform Cloud workspace):
+# AWS_ACCESS_KEY_ID        = <your-aws-access-key>
+# AWS_SECRET_ACCESS_KEY    = <your-aws-secret-key>
+# AWS_DEFAULT_REGION       = us-east-2
+
+# Terraform Variables (set in Terraform Cloud workspace):
+# These override values in terraform.tfvars
+# - aws_region              = "us-east-2"
+# - project_name            = "stori-challenge"
+# - alert_email             = "your-email@example.com"  (optional)
+# - container_image         = "nginx:1.25-alpine"
+
+# Version Control Settings (optional):
+# - Connect to GitHub repository: jaimefrancosalazar/stori-take-home-challenge
+# - VCS Branch: main
+# - Automatic Run Triggering: enabled for changes in terraform/
+
+# Notifications (optional):
+# - Configure Slack/Email notifications for run status
+# - Set up for: Plan changes, Apply completed, Apply errored
+
+# Team Access:
+# - Configure team permissions as needed
+# - Recommended: Separate read/write access for different teams

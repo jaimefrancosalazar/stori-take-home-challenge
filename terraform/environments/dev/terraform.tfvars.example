@@ -1,0 +1,46 @@
+# Stori Challenge - Dev Environment Configuration
+# Copy this file to terraform.tfvars and customize as needed
+
+# AWS Configuration
+aws_region = "us-east-2"
+project_name = "stori-challenge"
+
+# Network Configuration
+vpc_cidr = "10.0.0.0/16"
+availability_zones = ["us-east-2a", "us-east-2b"]
+enable_nat_gateway = true
+
+# Container Configuration
+container_name = "stori-app"
+# Update this with your Docker image
+# For local testing, you can use the default nginx image
+# For production, build and push your application image to ECR
+container_image = "nginx:1.25-alpine"
+container_port = 80
+health_check_path = "/health"
+
+# Task Configuration
+task_cpu = "256"      # 0.25 vCPU
+task_memory = "512"   # 512 MB
+
+# Scaling Configuration
+desired_count = 2     # Initial number of tasks
+min_capacity = 1      # Minimum tasks
+max_capacity = 10     # Maximum tasks
+
+# Environment Variables
+# Add your application-specific environment variables here
+environment_variables = [
+  {
+    name  = "ENVIRONMENT"
+    value = "dev"
+  }
+]
+
+# Monitoring
+log_retention_days = 7
+# Optional: Add your email to receive CloudWatch alarms
+# alert_email = "your-email@example.com"
+
+# ALB Configuration
+enable_deletion_protection = false

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stori - Take Home Challenge by jaime</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .info-item {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stori</h1>
+        <div class="subtitle">Infrastructure as Code Challenge - CI/CD Pipeline</div>
+
+        <p>
+            Welcome to the Stori Take-Home Challenge! This application demonstrates
+            a production-ready infrastructure deployment on AWS using Terraform and ECS Fargate.
+        </p>
+
+        <div class="info-section">
+            <div class="info-item">
+                <span class="info-label">Status:</span>
+                <span class="status">Online</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Platform:</span> AWS ECS Fargate
+            </div>
+            <div class="info-item">
+                <span class="info-label">Load Balancer:</span> Application Load Balancer (ALB)
+            </div>
+            <div class="info-item">
+                <span class="info-label">Auto Scaling:</span> Enabled (CPU-based)
+            </div>
+            <div class="info-item">
+                <span class="info-label">Monitoring:</span> CloudWatch + SNS Alerts
+            </div>
+            <div class="info-item">
+                <span class="info-label">Infrastructure:</span> 100% Terraform
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <div class="tech-badge">AWS ECS Fargate</div>
+            <div class="tech-badge">Application Load Balancer</div>
+            <div class="tech-badge">Terraform</div>
+            <div class="tech-badge">Docker</div>
+            <div class="tech-badge">Nginx</div>
+            <div class="tech-badge">CloudWatch</div>
+            <div class="tech-badge">SNS</div>
+            <div class="tech-badge">Auto Scaling</div>
+        </div>
+    </div>
+</body>
+</html>
