@@ -128,6 +128,28 @@ resource "aws_iam_role" "ecs_task" {
   tags = var.tags
 }
 
+# IAM Policy for ECS Exec (SSM)
+resource "aws_iam_role_policy" "ecs_exec_policy" {
+  name = "${var.project_name}-ecs-exec-policy"
+  role = aws_iam_role.ecs_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 # ECS Task Definition
 resource "aws_ecs_task_definition" "main" {
   family                   = var.project_name
@@ -182,6 +204,8 @@ resource "aws_ecs_service" "main" {
   task_definition = aws_ecs_task_definition.main.arn
   desired_count   = var.desired_count
   launch_type     = "FARGATE"
+
+  enable_execute_command = true
 
   network_configuration {
     subnets          = var.private_subnet_ids
