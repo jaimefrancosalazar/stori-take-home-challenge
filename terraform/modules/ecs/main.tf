@@ -224,6 +224,11 @@ resource "aws_ecs_service" "main" {
 
   health_check_grace_period_seconds = 60
 
+  # Ignore changes to task_definition so CircleCI can update it independently
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
+
   tags = var.tags
 
   depends_on = [var.alb_listener_arn]

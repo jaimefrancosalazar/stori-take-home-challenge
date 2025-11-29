@@ -69,7 +69,7 @@ variable "task_memory" {
 variable "desired_count" {
   description = "Desired number of ECS tasks"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "min_capacity" {
@@ -81,7 +81,7 @@ variable "min_capacity" {
 variable "max_capacity" {
   description = "Maximum number of ECS tasks for auto scaling"
   type        = number
-  default     = 10
+  default     = 3
 }
 
 variable "environment_variables" {
