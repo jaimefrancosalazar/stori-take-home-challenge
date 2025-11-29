@@ -113,5 +113,5 @@ variable "enable_deletion_protection" {
 variable "alert_email" {
   description = "Email address for SNS notifications (optional)"
   type        = string
-  default     = ""
+  default     = "jaimefrancosalazar@gmail.com"
 }
