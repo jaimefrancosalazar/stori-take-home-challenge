@@ -114,7 +114,6 @@ resource "aws_iam_role" "ecs_task" {
 
 }
 
-# IAM Policy for ECS Exec (SSM)
 resource "aws_iam_role_policy" "ecs_exec_policy" {
   name = "${var.project_name}-ecs-exec-policy"
   role = aws_iam_role.ecs_task.id
@@ -132,10 +131,10 @@ resource "aws_iam_role_policy" "ecs_exec_policy" {
         ]
         Resource = "*"
       }
+    ]
   })
 }
 
-# ECS Task Definition
 resource "aws_ecs_task_definition" "main" {
   family                   = var.project_name
   network_mode             = "awsvpc"
@@ -177,11 +176,11 @@ resource "aws_ecs_task_definition" "main" {
         startPeriod = 60
       }
     }
+  ])
 
   tags = var.tags
 }
 
-# ECS Service
 resource "aws_ecs_service" "main" {
   name            = "${var.project_name}-service"
   cluster         = aws_ecs_cluster.main.id
