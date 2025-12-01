@@ -94,8 +94,8 @@ resource "aws_iam_role_policy" "ecs_task_execution_cwlogs" {
       }
     ]
   })
+}
 
-# IAM Role for ECS Task (application permissions)
 resource "aws_iam_role" "ecs_task" {
   name = "${var.project_name}-ecs-task-role"
 
