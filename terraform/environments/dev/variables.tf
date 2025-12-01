@@ -81,7 +81,7 @@ variable "min_capacity" {
 variable "max_capacity" {
   description = "Maximum number of ECS tasks for auto scaling"
   type        = number
-  default     = 3
+  default     = 6
 }
 
 variable "environment_variables" {
